@@ -163,12 +163,12 @@ def get_media_id(media_name , media_type):
     media_id = ""
     if media_type == "sticker":
         media_id = sett.stickers.get(media_name, None)
-    #elif media_type == "image":
-    #    media_id = sett.images.get(media_name, None)
-    #elif media_type == "video":
-    #    media_id = sett.videos.get(media_name, None)
-    #elif media_type == "audio":
-    #    media_id = sett.audio.get(media_name, None)
+    elif media_type == "image":
+        media_id = sett.images.get(media_name, None)
+    elif media_type == "video":
+        media_id = sett.videos.get(media_name, None)
+    elif media_type == "audio":
+        media_id = sett.audio.get(media_name, None)
     return media_id
 
 def replyReaction_Message(number, messageId, emoji):
@@ -230,23 +230,23 @@ def administrar_chatbot(text,number, messageId, name):
         list.append(replyReaction)
         list.append(replyButtonData)
     elif "servicios" in text:
-        body = "Tenemos varias áreas de consulta para elegir. ¿Cuál de estos servicios te gustaría explorar?"
-        footer = "Equipo Bigdateros"
-        options = ["Analítica Avanzada", "Migración Cloud", "Inteligencia de Negocio"]
+        body = "Tenemos varios servicios para elegir. ¿Cuál de estos servicios te gustaría explorar?"
+        footer = "Equipo Jhon Lens"
+        options = ["Cambio de lentes y montura", "Cambio de lentes", "Cambio de montura","Examen visual"]
 
         listReplyData = listReply_Message(number, options, body, footer, "sed2",messageId)
         sticker = sticker_Message(number, get_media_id("perro_traje", "sticker"))
 
         list.append(listReplyData)
         list.append(sticker)
-    elif "inteligencia de negocio" in text:
-        body = "Buenísima elección. ¿Te gustaría que te enviara un documento PDF con una introducción a nuestros métodos de Inteligencia de Negocio?"
-        footer = "Equipo Bigdateros"
-        options = ["✅ Sí, envía el PDF.", "⛔ No, gracias"]
+    elif "Cambio de lentes y montura" in text:
+        body = "Entendido. ¿Ya cuentas con tu formula visual reciente?"
+        footer = "Equipo Jhon Lens"
+        options = ["✅ Sí.", "⛔ No"]
 
         replyButtonData = buttonReply_Message(number, options, body, footer, "sed3",messageId)
         list.append(replyButtonData)
-    elif "sí, envía el pdf" in text:
+    elif "sí" in text:
         sticker = sticker_Message(number, get_media_id("pelfet", "sticker"))
         textMessage = text_Message(number,"Genial, por favor espera un momento.")
 
@@ -254,33 +254,33 @@ def administrar_chatbot(text,number, messageId, name):
         enviar_Mensaje_whatsapp(textMessage)
         time.sleep(3)
 
-        document = document_Message(number, sett.document_url, "Listo 👍🏻", "Inteligencia de Negocio.pdf")
+        document = document_Message(number, sett.document_url, "Listo 👍🏻", "Formula.pdf")
         enviar_Mensaje_whatsapp(document)
         time.sleep(3)
 
-        body = "¿Te gustaría programar una reunión con uno de nuestros especialistas para discutir estos servicios más a fondo?"
-        footer = "Equipo Bigdateros"
-        options = ["✅ Sí, agenda reunión", "No, gracias." ]
+        body = "¿Te gustaría programar una cita para conocer a detalle los servicios de Jhon Lens?"
+        footer = "Equipo Jhon Lens"
+        options = ["✅ Sí, agenda cita", "No, gracias." ]
 
         replyButtonData = buttonReply_Message(number, options, body, footer, "sed4",messageId)
         list.append(replyButtonData)
-    elif "sí, agenda reunión" in text :
-        body = "Estupendo. Por favor, selecciona una fecha y hora para la reunión:"
-        footer = "Equipo Bigdateros"
+    elif "Sí, agenda cita" in text :
+        body = "Estupendo. Por favor, selecciona una fecha y hora para la cita:"
+        footer = "Equipo Jhon Lens"
         options = ["📅 10: mañana 10:00 AM", "📅 7 de junio, 2:00 PM", "📅 8 de junio, 4:00 PM"]
 
         listReply = listReply_Message(number, options, body, footer, "sed5",messageId)
         list.append(listReply)
     elif "7 de junio, 2:00 pm" in text:
-        body = "Excelente, has seleccionado la reunión para el 7 de junio a las 2:00 PM. Te enviaré un recordatorio un día antes. ¿Necesitas ayuda con algo más hoy?"
-        footer = "Equipo Bigdateros"
+        body = "Excelente, has seleccionado cita para el 7 de junio a las 2:00 PM. Te enviaré un recordatorio un día antes. ¿Necesitas ayuda con algo más hoy?"
+        footer = "Equipo Jhon Lens"
         options = ["✅ Sí, por favor", "❌ No, gracias."]
 
 
         buttonReply = buttonReply_Message(number, options, body, footer, "sed6",messageId)
         list.append(buttonReply)
     elif "no, gracias." in text:
-        textMessage = text_Message(number,"Perfecto! No dudes en contactarnos si tienes más preguntas. Recuerda que también ofrecemos material gratuito para la comunidad. ¡Hasta luego! 😊")
+        textMessage = text_Message(number,"Perfecto! No dudes en contactarnos si tienes más preguntas. ¡Hasta luego! 😊")
         list.append(textMessage)
     else :
         data = text_Message(number,"Lo siento, no entendí lo que dijiste. ¿Quieres que te ayude con alguna de estas opciones?")
